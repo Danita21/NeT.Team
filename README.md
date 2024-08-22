@@ -13,6 +13,6 @@ Integrantes
 
 [@Jasu17](https://github.com/Jasu17)
 
-[JOSESUCH](https://github.com/JOSESUCH)
+[@JOSESUCH](https://github.com/JOSESUCH)
 
-[jonsebas15](https://github.com/jonsebas15)
+[@jonsebas15](https://github.com/jonsebas15)
