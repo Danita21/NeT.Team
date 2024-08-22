@@ -7,6 +7,9 @@ Por otro lado, a cada una de las prácticas se le adjuntará un Readme en el que
 
 Integrantes
 
-@Danita21
+[@Danita21](https://github.com/Danita21)
 
-@JuanSe2731
+[@JuanSe2731](https://github.com/JuanSe2731)
+
+[@Jasu17](https://github.com/Jasu17)
+
