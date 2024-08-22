@@ -8,4 +8,5 @@ Por otro lado, a cada una de las prácticas se le adjuntará un Readme en el que
 Integrantes
 
 @Danita21
+
 @JuanSe2731
