@@ -1,4 +1,4 @@
-**Desarrollo de la primera practica:**
+**Instalando y reconociendo las principales características de Nand2Tetris - Lógica Booleana**
 
 
 **¿Qué es Nand2tetris?**
