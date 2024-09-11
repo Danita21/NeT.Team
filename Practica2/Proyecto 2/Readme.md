@@ -56,4 +56,42 @@ __b[1..15]=false:__ Los bits restantes de b estan configurados en 0, esto asegur
 
 #### ALU
 
+el chip ALU (Unidad Aritmético-lógica) es un componente fundamental en la arquitectura de una computadora, encargado de realizar operaciones aritméticas y lógicas en dos números binarios de 16 bits. El diseño de este ALU permite realizar una variedad de operaciones en función de las señales de control proporcionadas.  
+
+Entradas:
+
+__x[16]__ y __y[16]:__ Los dos números de 16 bits para las operaciones.  
+__ZX:__ Controla si la entrada 'x' debe ser 0.  
+__nx:__ Controla si la entrada 'x' debe ser Negada.  
+__zy:__ Controla si la entrada 'y' debe ser 0.  
+__ny:__ Controla si la entrada 'y' debe ser Negada.  
+__f:__ Controla si se debe realizar la suma (x + y) o la operacion AND (x & y).  
+__no:__ Controla si la salida debe ser negada.  
+
+Salidas:  
+
+__out[16]:__ Resultado de la operacion aritmético-lógica.  
+__zr:__ Señal que indica si la salida es cero.  
+__ng:__ Señal que indica si la salida en Negativa.  
+
+Detalles del diseño:  
+
+##### Configuración de Entradas zx y zy
+__Mux16:__ Se utiliza para selecciona entre la entrada original ('x' o 'y') y un valor de 0 (representado por 'false'). Esto se basa en los controles zx y zy.  
+
+##### Negacion de entradas nx y ny
+__Not16__ Se utiliza para negar las entradas seleccionadas por los multiplexores.  
+__Mux16__ Luego, selecciona entre la entrada original y la negada basandose en los controles 'nx' y 'ny'.  
+
+##### Operaciones aritméticas y lógicas f
+Se realizan las operaciones de suma (Add16) y AND (and16).  
+__Mux16__ selecciona el resultado de la suma o el resultado de la operacion AND seún el control 'f'
+
+##### Negacion de salida no
+__Not16__ niega la salida seleccionada.  
+__Mux16__ permite seleccionar entre la salida original y la salida negada según el controlador 'no'  
+
+##### Indicadores de Salida (zr y ng)
+__zr:__ Se utiliza __Or8Way__ para verificar si la salida es cero. Se revisa cada byte (8 bits) de la salida para determinar si todos los bits son cero.
+__ng:__ Se utiliza __And__ para verificar si el bit mas significativo (bit 15) de la salida es 1, lo que indica un número negativo.
 
