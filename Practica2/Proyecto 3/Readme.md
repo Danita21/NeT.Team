@@ -8,36 +8,68 @@ En este proyecto nos enfocamos en construir todos los chips descritos en el capi
 
 ### Bit
 
-Para poder tener una unidad de persistencia de memoria de un bit tenemos que poder guardar y cargar informacion, para esto tenemos dos inputs in y load, este ultimo nos sirve como condicion para saber si debemos guardar nueva informacion o mantener la informacion anterior de forma que si el load es 1 ingresamos nueva informacion, de lo contrario mantenemos la informacion, para realizar esto utilizamos un multiplexor asignando el load al valor del selector para que el decida que informacion pasa, para las entradas hacemos un loop usando un data flip flop DFF cuya entrada es la salida del Mux y su salida vuelve al segundo input del Mux, de esta forma si el load carga un in = 1 el flip flop cargá la nueva entrada en cambio si el load no es 1 el flip flp cargará la informacion que tenia antes.
+Un chip de bit es la unidad más básica de almacenamiento en memoria digital. Para implementar una unidad de persistencia de memoria de un bit, necesitamos mecanismos para almacenar y recuperar información. El chip de bit consta de dos entradas principales: in y load. La entrada load actúa como una señal de control para decidir si debemos almacenar nueva información o mantener la información anterior.
+
+El funcionamiento se basa en un multiplexor (MUX) que selecciona entre la nueva información (in) y la información previamente almacenada en función del valor de load. Si load es 1, el MUX permite que la nueva entrada in sea almacenada. De lo contrario, mantiene la información anterior.
+
+Para lograr esto, utilizamos un flip-flop D (DFF). La salida del MUX se conecta a la entrada del DFF, mientras que la salida del DFF se retroalimenta al segundo input del MUX. Así, si load es 1, el DFF actualiza su valor con la nueva entrada. Si load es 0, el DFF conserva su valor anterior.
+
+El flip-flop D es fundamental en esta configuración porque garantiza que la información se retenga correctamente hasta que se decida actualizarla, asegurando estabilidad y consistencia en el almacenamiento de un bit.
 
 ### Register
 
-El register es un conjunto de x bits, en este caso es un registro de 16 bits, para su realizacion utilizamos el chip de bit que realizamos anterior mente, asignando un bit para cada uno de los 16 valores del input, pero le asignamos a todos los 16 bits el mismo valor del load, con el cual el registro sabra si debe almacenar la informacion en caso de que el load sea uno o no almacenar la informacion del input en caso que el load sea diferente a uno.
+Un register es un grupo de bits que se utiliza para almacenar datos temporales en un procesador o sistema de memoria. En el caso de un registro de 16 bits, se compone de 16 chips de bit conectados en paralelo. Cada bit en el registro opera de manera similar al chip de bit descrito anteriormente.
+
+Cada uno de los 16 bits en el registro recibe el mismo valor para la señal load, lo que significa que todos los bits se actualizan simultáneamente cuando load es 1. Si load es 0, todos los bits mantienen su valor actual, garantizando que la información en el registro sea consistente y no se modifique accidentalmente.
+
+Los registros son esenciales para operaciones de lectura y escritura rápidas en sistemas de computación, ya que permiten el almacenamiento temporal y el acceso a datos cruciales durante el procesamiento.
 
 ### RAM8
 
-La RAM de 8 registros funciona tal y como su nombre lo indica con solo 8 registers. Lo primero que realizamos fue utilizar un demultiplexor para cargar el load a la direccion del registro utilizando el ADRESS al que se desea acceder, una vez hecho esto, todas las salidas del demultiplexor se cargan a la entrada load de cada register, de esta manera solo se actualiza el registro seleccionado. Para leer utilizamos un multiplexor cuyas entradas son las salidas de cada registro de manera que segun el adress, solo se mostrara la salida seleccionada. Asi obtuvimos una Ram de 8 registros que nos permite almacenar informacion y es la base para realizar las RAM compuestas.
+La RAM8 es una memoria de acceso aleatorio que consta de 8 registros de 16 bits cada uno. Para gestionar esta memoria, utilizamos un demultiplexor (DEMUX) para seleccionar qué registro (de los 8) se actualizará.
+
+El DEMUX toma una dirección (ADDRESS) de 3 bits que indica cuál de los 8 registros debe ser seleccionado. La señal load se dirige solo al registro seleccionado, actualizando su contenido con la nueva información. Las demás salidas del DEMUX no afectan a los registros no seleccionados, preservando su información anterior.
+
+Para la lectura, un multiplexor (MUX) selecciona la salida del registro basado en la misma dirección de 3 bits. Esto asegura que solo el registro seleccionado en la etapa de escritura sea el que se lea, proporcionando así la información correcta a la salida.
+
+La RAM8 proporciona una estructura base para memorias más grandes y es fundamental en la jerarquía de almacenamiento de datos en sistemas digitales.
 
 ### RAM64
 
-Para realizar la RAM de 64 necesitamos 8 RAMs de 8 registros, por lo que la logica funciona de la misma manera, llegando a ser algo recursivo, y probablemente la causa de la demora en muchos de estos chips y posteriores. Al igual que con la RAM de 8 lo primero es un demultiplexor que en este caso no selecciona el registro sino la RAM 1,2,3...8, para esto nuestro adress ahora es de 6 bits y utilizamos los 3 mas significativos para seleccionar la RAM y los 3 menos significativos para seleccionar el registro dentro de esta RAM. Este demultiplexor asigna el load a la RAM8 correspondiente segun el adress[3..5] (bits mas significativos) y cada una de las RAM8 envia la salida del demultiplexor correspondiente. Pero dentro de las RAM8 enviamos como adress sus bits menos significativos adress[0..2]. Finalmente para leer usamos otra vez un multiplexor cuyas entradas con las salidas de cada RAM8 y solo permitira la salida de aquella que corresponda a la salida del adress[3..5].
+La RAM64 es una memoria de acceso aleatorio que se compone de 8 bloques de RAM8. La principal tarea aquí es seleccionar la RAM8 adecuada y el registro dentro de ella.
+
+Se utiliza un DEMUX de 6 bits en esta RAM64. Los 3 bits más significativos del direccionamiento (ADDRESS) determinan cuál de las 8 RAM8 se debe activar para la operación de escritura. Los 3 bits menos significativos son utilizados para seleccionar el registro dentro de la RAM8 activa.
+
+Dentro de cada RAM8, la señal load se dirige según los bits menos significativos del direccionamiento. Para la lectura, se emplea un MUX que selecciona la salida de la RAM8 correspondiente basada en los bits más significativos del direccionamiento. Esto permite acceder y gestionar 64 ubicaciones de memoria de manera eficiente.
 
 ### RAM512
 
-Como se menciono en los apartados anteriores, el principal problema de utilizar tanta recursividad es que cada segundo se vuelve mas lento el programa en ejecucuion, ya que en este caso, una RAM512 invoca 8 RAM64, cada una de estas 8 RAM8 y cada una de estas 8 register sin mencionar sus bits. Al igual que las anteriores bits se utiliza un demultiplexor para escribir y selecciona la RAM64 con los 3 bits mas signifcativos adress[6..8] y llama las RAM64 enviandoles como adress[0..5]. Para leer se utiliza un multiplexor que recibe las salidas de las RAM64 y selecciona la salida con adress[6..8]. Podemos concluir a esta altura que los 3 bits mas significativos del adress se utilizan en los DMUX Y MUX, mientras que el resto de bits se envian a la funcion RAM interna.
+La RAM512 amplía la capacidad de la RAM64 al incorporar 8 bloques de RAM64. Esta estructura jerárquica sigue un patrón recursivo similar al de RAM64 pero con una mayor capacidad de almacenamiento.
+
+Un DEMUX de 9 bits gestiona la selección de las 8 RAM64. Los 3 bits más significativos del direccionamiento determinan cuál de las 8 RAM64 se activará, mientras que los 6 bits restantes se utilizan para seleccionar el registro dentro de la RAM64 activa.
+
+Durante la lectura, un MUX selecciona entre las salidas de las 8 RAM64 basándose en los 3 bits más significativos del direccionamiento. Esta configuración permite gestionar hasta 512 ubicaciones de memoria, incrementando significativamente la capacidad de almacenamiento y recuperación de datos.
 
 ### RAM4k
 
-La RAM4K se compone de 8 RAM512 y un adress de 12 bits, al igual que en las anteriores, se usa un demultiplexor para asignar el load a la posicion de RAM correcta usando los 3 bits mas significativos del adress y se envian estos load o salidas del DMUX a cada una de los RAM512, las salidas de estas RAM512 entran a un multiplexor y segun adress[9..11] obtenemos la salida requerida.
+La RAM4k se compone de 8 bloques de RAM512 y está diseñada para manejar 4,096 ubicaciones de memoria. Para gestionar esta cantidad, se utiliza un DEMUX de 12 bits.
+
+En esta configuración, los 3 bits más significativos del direccionamiento seleccionan cuál de las 8 RAM512 se activará. Cada una de estas RAM512 recibe la dirección de 9 bits (los 9 bits menos significativos) para la selección del registro dentro de ellas.
+
+Para la lectura, un MUX toma las salidas de las 8 RAM512 y selecciona la salida correspondiente basada en los bits más significativos del direccionamiento (ADDRESS[9..11]). Esto permite acceder a una gran cantidad de ubicaciones de memoria de forma eficiente.
 
 ### RAM16K
 
-La RAM16K se compone de 8 RAM4K y un adress de 15 bits, al igual que en las anteriores, se usa un demultiplexor para asignar el load a la posicion de RAM correcta usando los 3 bits mas significativos del adress y se envian estos load o salidas del DMUX a cada una de los RAM4K, las salidas de estas RAM4K entran a un multiplexor y segun adress[12..14] obtenemos la salida requerida.
+La RAM16K se expande aún más al incluir 8 bloques de RAM4k. La capacidad de almacenamiento de esta memoria es de 16,384 ubicaciones. Para manejar esta estructura, se utiliza un DEMUX de 15 bits.
+
+En esta configuración, los 3 bits más significativos del direccionamiento determinan cuál de las 8 RAM4K se seleccionará para la escritura. Los 12 bits restantes se usan para seleccionar el registro dentro de la RAM4K activa.
+
+El proceso de lectura utiliza un MUX que selecciona entre las salidas de las 8 RAM4K basándose en los 3 bits más significativos del direccionamiento (ADDRESS[12..14]). Esta jerarquía permite manejar grandes volúmenes de datos de manera eficiente y estructurada.
 
 ### PC
 
-Para este counter requerimos informacion de la RAM a la cual llamamos outloop, y con ayuda de un add16 realizamos un incrementer, posteriormente con un multiplexor si la entrada inc es 1 guardamos el incremento, si no mantenemos la entrada procedente de la RAM. En un segundo MUX ingresamos la salida del anterior multiplexor t0 y la entrada in, si el load es 1 dejamos pasar la entrada in, de lo contrario mantenemos t0 en la salida llamada t1. Posteriormente en un multiplexor ingresamos t1 y false (equivalente a ceros), si reset es 1, la salida en t2 seran ceros, de lo contrario se conservara la entrada t1. Despues de esto, con ayuda de compuertas or miramos si hubo incremento, reset o load en el PC, es decir que una de estas entradas fuera 1, y en caso de serlo, registramos en la RAM t1.
+El Program Counter (PC) es un componente esencial en la arquitectura de computadoras que realiza un seguimiento de la dirección de la instrucción siguiente a ejecutar. Utiliza un add16 para incrementar la dirección actual en 1, facilitando la secuencia de ejecución de instrucciones.
 
+La lógica del PC incluye varios MUX para gestionar la entrada de datos. Si inc es 1, el PC incrementa la dirección actual; si inc es 0, conserva la dirección de la RAM (outloop). Luego, un segundo MUX elige entre la dirección incrementada (t0) y una nueva entrada (in), dependiendo del valor de load.
 
-
-
+Un tercer MUX se utiliza para manejar el reset. Si reset es 1, el PC se reinicia a cero; si no, conserva la dirección actual (t1). Finalmente, se utiliza una combinación de compuertas OR para verificar si ha habido un incremento, reset o carga, y actualizar el PC en consecuencia. Esto garantiza que el contador de programa mantenga la secuencia correcta y maneje adecuadamente las instrucciones del procesador.
