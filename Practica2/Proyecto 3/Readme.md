@@ -2,7 +2,12 @@
 En esta práctica se realizaron los proyectos 2 y 3 de la página [nand2tetris](https://www.nand2tetris.org/) los cuales consisten en lógica aritmética y lógica secuancial respectivamente.
 
 ## PROYECTO 3
-En este proyecto nos enfocamos en construir todos los chips descritos en el capitulo 3, hasta llegar a una unidad de memoria de acceso aleatorio.
+
+### INTRODUCCIÓN 
+
+El Proyecto 3 de la página nand2tetris se centra en la implementación de la memoria de acceso aleatorio (RAM) y sus componentes básicos mediante el diseño y construcción de una serie de chips lógicos. Este proyecto es fundamental para entender la arquitectura de computadoras, ya que se basa en el diseño de unidades de almacenamiento y procesamiento básico, que son los bloques de construcción de sistemas computacionales complejos.
+
+El objetivo principal de este proyecto es construir una memoria RAM de tamaño creciente, comenzando desde la unidad de almacenamiento más básica y escalando hasta una memoria de 16K. La práctica proporciona una visión profunda del funcionamiento interno de las memorias, que son esenciales para cualquier sistema informático.
     
 ### Códigos de los chips
 
@@ -73,3 +78,7 @@ El Program Counter (PC) es un componente esencial en la arquitectura de computad
 La lógica del PC incluye varios MUX para gestionar la entrada de datos. Si inc es 1, el PC incrementa la dirección actual; si inc es 0, conserva la dirección de la RAM (outloop). Luego, un segundo MUX elige entre la dirección incrementada (t0) y una nueva entrada (in), dependiendo del valor de load.
 
 Un tercer MUX se utiliza para manejar el reset. Si reset es 1, el PC se reinicia a cero; si no, conserva la dirección actual (t1). Finalmente, se utiliza una combinación de compuertas OR para verificar si ha habido un incremento, reset o carga, y actualizar el PC en consecuencia. Esto garantiza que el contador de programa mantenga la secuencia correcta y maneje adecuadamente las instrucciones del procesador.
+
+#### BIBLIOGRAFÍA
+
+Nisan, N., & Schocken, S. (n.d.). Nand2Tetris: The Elements of Computing Systems. Retrieved from https://www.nand2tetris.org/ 
