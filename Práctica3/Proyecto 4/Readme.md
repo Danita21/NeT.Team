@@ -20,7 +20,7 @@ No es necesario validar estas condiciones en el código.
 - Ensamblar el archivo utilizando el ensamblador de Hack, generando el archivo Mult.hack con las instrucciones binarias.
 - Cargar y ejecutar el archivo .hack en el emulador CPU.
 - Utilizar el script Mult.tst para probar el programa y corregir errores de ser necesario.
-- 
+
 ### Fill.asm
 Este programa maneja la entrada/salida del teclado y la pantalla de manera básica. El programa corre un bucle infinito que escucha la entrada del teclado. Cuando se presiona una tecla, el programa llenará la pantalla de color negro, y cuando no se presiona ninguna tecla, la pantalla se mantendrá en blanco.
 
