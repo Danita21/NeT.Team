@@ -1,39 +1,47 @@
-# PREGUNTAS ADICIONALES
+# PRÁCTICA 3
+En esta práctica se realizaron los proyectos 4 de la página nand2tetris, los cuales consisten en programación de bajo nivel utilizando lenguaje ensamblador y la plataforma Hack.
 
-1. ¿Cuál es el objetivo de cada uno de esos proyectos con sus palabras y describa qué debe hacer para desarrollarlo?
+## PROYECTO 4
+### INTRODUCCIÓN
+El proyecto 4 de la página nand2tetris se basa en familiarizarse con la programación en lenguaje ensamblador para la computadora Hack, comprendiendo el proceso de ensamblado y la ejecución del código binario en hardware. Se trabajará con dos programas en lenguaje ensamblador que permitirán experimentar de cerca con el lenguaje de máquina.
 
-Para el primer proyecto, el objetivo es construir todas las compuertas descritas en el Capítulo 2 (HalfAdder, FullAdder, etc.), hasta llegar a una Unidad Lógica Aritmética (ALU) de la computadora Hack (para realizar operaciones aritméticas). Todo esto únicamente haciendo uso de las compuertas creadas en el Proyecto 1 y las compuertas que se vayan creando en éste.
+### PROGRAMAS
+### Mult.asm
+Este programa realiza una multiplicación entre los valores almacenados en los registros de la Hack RAM. Específicamente, multiplica los valores en R0 y R1, almacenando el resultado en R2. Los valores se encuentran en las primeras 16 posiciones de RAM (R0...R15).
 
-En el segundo proyecto, se construirá paso a paso una unidad de memoria de acceso aleatorio RAM a partir de compuertas DFF primitivas, compuertas construidas a partir de esas y compuertas construidas en prácticas anteriores. 
-Para resolver estos proyectos, se empleará el software The Nand2tetris Software Suite, en donde se proporcionarán las herramientas y archivos necesarios para completar esta práctica.
+#### Objetivo:
+Calcular R0 * R1 y almacenar el resultado en R2.
 
-2. Explique las principales diferencias entre la lógica aritmética y la lógica secuencial.
+#### Implementación:
+El programa asume que R0 ≥ 0, R1 ≥ 0 y que R0 * R1 < 32768.
+No es necesario validar estas condiciones en el código.
+#### Procedimiento:
+- Escribir el programa Mult.asm en un editor de texto utilizando el lenguaje ensamblador Hack.
+- Ensamblar el archivo utilizando el ensamblador de Hack, generando el archivo Mult.hack con las instrucciones binarias.
+- Cargar y ejecutar el archivo .hack en el emulador CPU.
+- Utilizar el script Mult.tst para probar el programa y corregir errores de ser necesario.
+- 
+### Fill.asm
+Este programa maneja la entrada/salida del teclado y la pantalla de manera básica. El programa corre un bucle infinito que escucha la entrada del teclado. Cuando se presiona una tecla, el programa llenará la pantalla de color negro, y cuando no se presiona ninguna tecla, la pantalla se mantendrá en blanco.
 
-La lógica aritmética está dedicada a realizar operaciones matemáticas, como sumas, restas, multiplicaciones, utilizando circuitos combinacionales que ejecutan cálculos basados únicamente en las entradas actuales. Estos circuitos, como sumadores y unidades aritmético-lógicas (ALU), no mantienen estado, lo que significa que sus salidas cambian inmediatamente con las variaciones en las entradas. 
-Por otro lado, la lógica secuencial se enfoca en almacenar y gestionar el estado de la información a lo largo del tiempo mediante elementos de memoria como flip-flops y registros. Estos circuitos dependen de eventos de reloj (clock) y del historial de entradas para determinar sus salidas, lo que permite la sincronización y la ejecución secuencial de operaciones. 
+#### Objetivo:
+Escuchar la entrada del teclado y alternar entre una pantalla completamente negra y una pantalla completamente blanca dependiendo de si se presiona una tecla.
 
-# BONUS
-¿Qué tipo de unidades aritmético lógicas existen?
+#### Implementación:
+La pantalla se llena de negro cuando se detecta una tecla presionada.
+La pantalla se limpia (se llena de blanco) cuando no se detecta ninguna tecla presionada.
+La secuencia en la que se llenan los píxeles no es relevante, siempre que la pantalla se llene completamente de un color.
 
-Algunos de los tipos de unidades aritmético lógicas (ALU) son:
--ALU Básica: Realiza operaciones aritméticas fundamentales como suma y resta, y operaciones lógicas básicas como AND, OR y XOR.
+#### Procedimiento:
+- Escribir el programa Fill.asm siguiendo las especificaciones anteriores.
+- Probar el programa usando el emulador de CPU de Hack.
+- Ejecutar el script Fill.tst y realizar pruebas interactivas para verificar su correcto funcionamiento.
+- Utilizar el script FillAutomatic.tst para realizar pruebas automáticas con el archivo FillAutomatic.cmp que compara la salida esperada con la generada.
 
--ALU de N Bits: Opera con números de n bits, permitiendo realizar cálculos en palabras de diferentes tamaños, como 8, 16, 32 o 64 bits.
+### CONCLUSIÓN
+Estos dos programas permiten desarrollar un entendimiento profundo de la programación de bajo nivel, destacando la importancia de la traducción entre lenguajes de alto nivel y lenguaje de máquina
 
--ALU de Punto Flotante: Ejecuta operaciones aritméticas con números en punto flotante, como suma, resta, multiplicación y división.
-
--ALU SIMD (Single Instruction, Multiple Data): Optimizada para realizar la misma operación en múltiples datos simultáneamente, ideal para procesamiento paralelo.
-
--ALU de Cálculo de Enteros (Integer ALU): Especializada en realizar operaciones aritméticas y lógicas con números enteros, sin soporte para punto flotante.
-
--ALU de Cálculo de Enteros con Soporte para Operaciones Multiplicativas y Divisorias: Incluye funcionalidades adicionales para multiplicación y división, además de operaciones aritméticas básicas.
-
--ALU Personalizada o Especializada: Diseñada para realizar operaciones específicas requeridas por aplicaciones particulares o sistemas embebidos, con funcionalidades personalizadas.
 
 # REFERENCIAS
-[1] (S/f). Ecured.cu. Recuperado el 12 de septiembre de 2024, de https://www.ecured.cu/Unidad_Aritmético_Lógica#Tipos_de_ALU
-
-[2] (S/f-b). Unican.es. Recuperado el 12 de septiembre de 2024, de https://ocw.unican.es/pluginfile.php/2410/course/section/2423/tema_04.pdf
-
-[3] La Unidad Aritmética Lógica (ALU). (s/f). Algoreducation.com. Recuperado el 12 de septiembre de 2024, de https://cards.algoreducation.com/es/content/txMg2qW4/unidad-aritmetica-logica-alu
+[1] Nisan, N., & Schocken, S. (n.d.). Nand2Tetris: The Elements of Computing Systems. Retrieved from https://www.nand2tetris.org
 
