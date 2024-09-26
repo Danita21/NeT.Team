@@ -1,4 +1,4 @@
-¡Bienvenidos al repositorio de NeT.Team!
+##¡Bienvenidos al repositorio de NeT.Team!
 
 En la Wiki se encontrarán las prácticas, el proyecto final y una breve descripción de los integrantes.
 
