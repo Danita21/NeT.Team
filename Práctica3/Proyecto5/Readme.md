@@ -1,6 +1,6 @@
 # PRÁCTICA 3
 
-## PROYECTO 2
+## PROYECTO 5
 ### INTRODUCCIÓN
 En los anteriores proyectos, se han contruido los componentes esenciales de procesamiento y almacenamiento de una computadora (la ALU y la RAM), ahora, el proyecto 5 de la página [nand2tetris](https://www.nand2tetris.org/project05) se basa en la creación de la plataforma de hardware Hack completa, implementando los componentes previamente hechos. El resultado será una compitadora de propósito general capaz de ejecutar programas escritos en el lenguaje de máquina Hack. 
 En este proyecto se implementarán los siguientes chips:
