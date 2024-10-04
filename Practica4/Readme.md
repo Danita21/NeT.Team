@@ -12,10 +12,18 @@ Justificación:
 
 # BONUS
 
-## Inserte aqui la pregunta
+## ¿Por qué es tan importante el ensamblador?
 
-Inserte aqui la respuesta.
+El lenguaje ensamblador constituye el primer intento de sustitución del lenguaje por uno más cercano al utilizado por los humanos. No obstante, el lenguaje ensamblador presenta la mayoría de los inconvenientes que tiene el lenguaje máquina: un repertorio muy reducido de instrucciones, el rígido formato de las instrucciones, la baja portabilidad y la fuerte dependencia del hardware.
+
+Dado que el lenguaje ensamblador está fuertemente condicionado por la arquitectura del ordenador que soporta, los programadores no suelen escribir programas de tamaño considerable en ensamblador, sino que utilizan este lenguaje para afinar partes importantes de programas escritos en lenguajes de más alto nivel.
+
+El lenguaje ensamblador sigue siendo importante, ya que ofrece al programador el control total de la máquina y como resultado genera un código compacto, rápido y eficiente, permite una interacción directa con el hardware, brindando control sobre los registros del procesador, la memoria y los dispositivos de entrada/salida y facilita la depuración a nivel de hardware, especialmente en situaciones donde el código de alto nivel no proporciona información suficiente para rastrear problemas complejos.
 
 # REFERENCIAS
 
-https://www.nand2tetris.org/project06
+[1] Project 06. (s/f). Nand2tetris. Recuperado el 4 de octubre de 2024, de https://www.nand2tetris.org/project06
+
+[2] Software. (s/f). Uoc.edu. Recuperado el 4 de octubre de 2024, de https://cv.uoc.edu/moduls/XW02_79049_00373/web/main/m4/v2_3.html
+
+
